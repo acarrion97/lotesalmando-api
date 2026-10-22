@@ -161,7 +161,11 @@ const swaggerOptions: swaggerJsdoc.Options = {
       contact: { name: 'Soporte Lotes al Mando', email: 'soporte@lotesalmando.com' },
     },
     servers: [
-      { url: `http://localhost:${config.port}`, description: 'Desarrollo local' },
+      { url: config.apiUrl, description: 'Producción' },
+      // Entrada local adicional cuando se desarrolla en esta máquina.
+      ...(config.apiUrl.includes('localhost')
+        ? []
+        : [{ url: `http://localhost:${config.port}`, description: 'Desarrollo local' }]),
     ],
     tags: openapiTags,
     components: openapiComponents,
